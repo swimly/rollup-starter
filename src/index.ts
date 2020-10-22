@@ -1,6 +1,6 @@
 import './index.scss'
-import LCDate from './packages/date/index'
+import date from './packages/date/index'
 
 export default {
-  LCDate
+  date
 }

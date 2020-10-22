@@ -1,7 +1,16 @@
-import tpl from './temp/index.ejs'
+// import tpl from './temp/index.ejs'
+interface Option {
+  id?: string
+}
 export default class LCDate {
-  static init ():void {
-    console.log(tpl({text: 2}))
-    alert(9)
+  static option:Option = {
+    id: ''
+  }
+  constructor (option:Option) {
+    LCDate.init(option)
+  }
+  static init (option: Option):void {
+    this.option = Object.assign({}, this.option, option)
+    console.log(this.option)
   }
 }

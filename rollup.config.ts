@@ -1,7 +1,7 @@
 import path from 'path'
 import { RollupOptions } from 'rollup'
 import rollupTypescript from 'rollup-plugin-typescript2'
-import babel from 'rollup-plugin-babel'
+import rollupbabel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import { eslint } from 'rollup-plugin-eslint'
@@ -13,8 +13,10 @@ import cssnext from 'postcss-cssnext'
 import ejs from 'rollup-plugin-ejs'
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
+import sourcemaps from 'rollup-plugin-sourcemaps'
 
 import pkg from './package.json'
+
 
 const isDev = process.env.env == 'dev'
 
@@ -37,11 +39,13 @@ const plugins = isDev ? [
 // rollup 配置项
 const rollupConfig: RollupOptions = {
   input: paths.input,
+  external: ['lodash'],
   output: isDev ? [
     {
       file: path.join(paths.output, `${pkg.name}.js`),
       format: 'umd',
-      name: pkg.name
+      name: pkg.name,
+      sourcemap: true
     },
   ] : [
     // 输出 commonjs 规范的代码
@@ -49,29 +53,34 @@ const rollupConfig: RollupOptions = {
       file: path.join(paths.output, `${pkg.name}.cjs.js`),
       format: 'cjs',
       name: pkg.name,
+      sourcemap: true
     },
     // 输出 es 规范的代码
     {
       file: path.join(paths.output, `${pkg.name}.umd.js`),
       format: 'umd',
       name: pkg.name,
+      sourcemap: true
     },
     // 输出 es 规范的代码
     {
       file: path.join(paths.output, `${pkg.name}.iife.js`),
       format: 'iife',
       name: pkg.name,
+      sourcemap: true
     },
     // 输出 es 规范的代码
     {
       file: path.join(paths.output, `${pkg.name}.es.js`),
       format: 'es',
       name: pkg.name,
+      sourcemap: true
     },
   ],
   // external: ['lodash'], // 指出应将哪些模块视为外部模块，如 Peer dependencies 中的依赖
   // plugins 需要注意引用顺序
   plugins: [
+    sourcemaps(),
     // 验证导入的文件
     eslint({
       throwOnError: true, // lint 结果有错误将会抛出异常
@@ -98,7 +107,7 @@ const rollupConfig: RollupOptions = {
       },
     }),
     rollupTypescript(),
-    babel({
+    rollupbabel({
       runtimeHelpers: true,
       // 只转换源代码，不运行外部依赖
       exclude: 'node_modules/**',
