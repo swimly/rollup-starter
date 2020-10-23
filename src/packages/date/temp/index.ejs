@@ -1,1 +1,56 @@
-<div class="LC2_date"><%=locals.text%></div>
+<div class="LC2_date">
+  <% locals.data.forEach(function(month, i){ %>
+  <div class="LC2_date_core">
+    <!-- 头部 -->
+    <ul class="LC2_date_head">
+      <li>
+        <%if (i < 1) {%>
+        <span class="LC2_icon LC2_icon_arrow-left prev-month"></span>
+        <%}%>
+      </li>
+      <li>
+        <p class="LC2_date_year_label">
+          <span class="year-value"><%=locals.value[i].split('/')[0]%>年</span>
+          <span class="LC2_icon LC2_icon_arrow-down"></span>
+        </p>
+        <p class="LC2_date_month_label">
+          <span class="month-value"><%=locals.value[i].split('/')[1]%>月</span>
+          <span class="LC2_icon LC2_icon_arrow-down"></span>
+        </p>
+      </li>
+      <li>
+      <%if(locals.data.length == 1 || i > 0){%>
+        <span class="LC2_icon LC2_icon_arrow-right next-month"></span></span>
+      <%}%>
+      </li>
+    </ul>
+    <!-- 周名称 -->
+    <ul class="LC2_date_weekend">
+      <% locals.weeks.forEach(function(week, i){ %>
+        <li><%=week%></li>
+      <%})%>
+    </ul>
+    <!-- 内容区域 -->
+    <div class="LC2_date_content">
+      <table class="LC2_date_table">
+        <% month.forEach(function(week, idx){ %>
+          <tr>
+            <% week.forEach(function(day, index){ %>
+              <td>
+                <span><%= day.day%></span>
+              </td>
+            <%})%>
+          </tr>
+        <%})%>
+      </table>
+    </div>
+    <ul class="LC2_date_footer">
+      <li>
+        <%if (locals.data.length == 1 || i > 0) {%>
+        <a href="#" class="LC2_date_button">确定</a>
+        <%}%>
+      </li>
+    </ul>
+  </div>
+  <%})%>
+</div>

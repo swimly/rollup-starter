@@ -97,7 +97,9 @@ const rollupConfig: RollupOptions = {
     ejs({
       include: ['**/*.ejs', '**/*.html'], // optional, '**/*.ejs' by default
       exclude: ['**/index.html'], // optional, undefined by default
-      compilerOptions: {client: true}
+      compilerOptions: {
+        client: true
+      }
     }),
     // 配合 commnjs 解析第三方模块
     resolve({
