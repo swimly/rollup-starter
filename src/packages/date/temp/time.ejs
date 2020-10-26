@@ -17,12 +17,12 @@
     </ul>
     <div class="LC2_date_content">
       <div class="LC2_date_row">
-        <% column.forEach(function(cl, i){%>
+        <% column.forEach(function(cl, index){%>
           <div class="LC2_date_column">
             <ul class="LC2_date_list <%=locals.type%>">
-              <% cl.forEach(function(item, i){%>
-                <li>
-                  <span><%=item%></span>
+              <% cl.forEach(function(item, idx){%>
+                <li class="<%= parseInt(locals.value[i].split(' ')[1].split(':')[idx]) == item ? 'LC2_active' : ''%>">
+                  <span><%=item >= 10 ? item : '0' + item%></span>
                 </li>
               <%})%>
             </ul>

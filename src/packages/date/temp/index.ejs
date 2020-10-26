@@ -5,24 +5,24 @@
     <ul class="LC2_date_head">
       <li>
         <%if (i < 1) {%>
-          <span class="LC2_icon LC2_icon_arrow-left prev-year"></span>
+          <span class="LC2_icon LC2_icon_arrow-upper prev-year"></span>
           <span class="LC2_icon LC2_icon_arrow-left prev-month"></span>
         <%}%>
       </li>
       <li>
         <p class="LC2_date_year_label">
           <span class="year-value"><%=locals.value[i].split('/')[0]%>年</span>
-          <span class="LC2_icon LC2_icon_arrow-down"></span>
+          <span class="LC2_icon LC2_icon_arrow-down years"></span>
         </p>
         <p class="LC2_date_month_label">
           <span class="month-value"><%=locals.value[i].split('/')[1]%>月</span>
-          <span class="LC2_icon LC2_icon_arrow-down"></span>
+          <span class="LC2_icon LC2_icon_arrow-down months"></span>
         </p>
       </li>
       <li>
       <%if(locals.data.length == 1 || i > 0){%>
         <span class="LC2_icon LC2_icon_arrow-right next-month"></span></span>
-        <span class="LC2_icon LC2_icon_arrow-right next-year"></span></span>
+        <span class="LC2_icon LC2_icon_arrow-next next-year"></span></span>
       <%}%>
       </li>
     </ul>
@@ -38,8 +38,8 @@
         <% month.forEach(function(week, idx){ %>
           <tr>
             <% week.forEach(function(day, index){ %>
-              <td>
-                <span><%= day.day%></span>
+              <td class="<%= day.isMonth ? '' : 'LC2_disabled'%>">
+                <span class="<%= day.isToday ? 'LC2_today' : ''%>"><%= day.day%></span>
               </td>
             <%})%>
           </tr>
@@ -47,6 +47,11 @@
       </table>
     </div>
     <ul class="LC2_date_footer">
+      <li>
+        <%if (locals.type == 'datetime' && i == 0) {%>
+        <span>选择时间</span>
+        <%}%>
+      </li>
       <li>
         <%if (locals.data.length == 1 || i > 0) {%>
         <a href="#" class="LC2_date_button">确定</a>

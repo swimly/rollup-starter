@@ -3,7 +3,8 @@ interface Days {
   month?:number,
   day?:number,
   isMonth?:boolean,
-  weekday?:number
+  weekday?:number,
+  isToday?:boolean
 }
 export default class Utils {
   static parseToDom (html: string): NodeList {
@@ -23,6 +24,7 @@ export default class Utils {
     const time = new Date(date)
     const year:number = time.getFullYear()
     const month:number = time.getMonth() + 1
+    const today:number = time.getDate()
     // TODO: 获取上月，本月，下月三个月的数据
     const firstDay:number = this.getFirstDay(year, month)
     const curMonthDay:number = this.getMonthLength(year, month)
@@ -54,7 +56,8 @@ export default class Utils {
           month: m,
           day: day,
           isMonth: m == month,
-          weekday: weekday
+          weekday: weekday,
+          isToday: m == (new Date()).getMonth() + 1 && y == year && day == today
         })
       }
       dayArr.push(arr)

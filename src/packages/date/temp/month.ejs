@@ -3,19 +3,19 @@
   <div class="LC2_date_core <%=locals.type%>">
     <ul class="LC2_date_head">
       <li>
-        <span class="LC2_icon LC2_icon_arrow-left prev-years"></span>
+        <span class="LC2_icon LC2_icon_arrow-upper prev-years"></span>
       </li>
       <li>
         <span><%=locals.value[i].split('/')[0]%>年</span>
       </li>
       <li>
-        <span class="LC2_icon LC2_icon_arrow-right next-years"></span></span>
+        <span class="LC2_icon LC2_icon_arrow-next next-years"></span></span>
       </li>
     </ul>
     <div class="LC2_date_content">
       <ul class="LC2_date_list <%=locals.type%>">
-        <% months.forEach(function(month, i){%>
-        <li><span><%=month%></span></li>
+        <% months.forEach(function(month, index){%>
+        <li class="<%= parseInt(locals.value[i].split('/')[1]) == month ? 'LC2_active' : ''%>"><span><%=month >= 10 ? month : '0' + month%>月</span></li>
         <%})%>
       </ul>
     </div>

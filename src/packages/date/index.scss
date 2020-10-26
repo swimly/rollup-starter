@@ -107,6 +107,30 @@
     height:100%;
     td{
       text-align:center;
+      &.LC2_disabled{
+        color:#999;
+        .LC2_today{
+          color:inherit;
+          border:none;
+          background:none;
+        }
+      }
+      .LC2_today{
+        background-color:#0183FC;
+        color:#fff;
+        border-color:#0183FC;
+      }
+      span{
+        display:inline-block;
+        cursor: pointer;
+        width:24px;
+        height:24px;
+        line-height:24px;
+        border-radius:50%;
+        border-width:1px;
+        border-style: solid;
+        border-color:transparent;
+      }
     }
   }
   &_footer{
@@ -175,6 +199,12 @@
       height:20%;
       vertical-align: middle;
       text-align:center;
+      &.LC2_active{
+        span{
+          background-color: #0183FC;
+          color:#fff;
+        }
+      }
       &:before{
         content:"";
         display:inline-block;
@@ -185,6 +215,9 @@
       span{
         display:inline-block;
         vertical-align: middle;
+        padding:6px 14px;
+        cursor: pointer;
+        border-radius:2px;
       }
     }
   }

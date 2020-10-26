@@ -3,7 +3,7 @@
   <div class="LC2_date_core <%=locals.type%>">
     <ul class="LC2_date_head">
       <li>
-        <span class="LC2_icon LC2_icon_arrow-left prev-years"></span>
+        <span class="LC2_icon LC2_icon_arrow-upper prev-years"></span>
       </li>
       <li>
         <span class="year-value"><%=locals.years[i][0]%>年</span>
@@ -11,13 +11,13 @@
         <span class="year-value"><%=locals.years[i][14]%>年</span>
       </li>
       <li>
-        <span class="LC2_icon LC2_icon_arrow-right next-years"></span></span>
+        <span class="LC2_icon LC2_icon_arrow-next next-years"></span></span>
       </li>
     </ul>
     <div class="LC2_date_content">
       <ul class="LC2_date_list">
-        <% years.forEach(function(year, i){%>
-        <li><span><%=year%></span></li>
+        <% years.forEach(function(year, index){%>
+        <li class="<%= parseInt(locals.value[i].split('/')[0]) == year ? 'LC2_active' : ''%>"><span><%=year%></span></li>
         <%})%>
       </ul>
     </div>
