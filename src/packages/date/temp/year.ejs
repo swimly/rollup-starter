@@ -1,0 +1,33 @@
+<div class="LC2_date">
+  <% locals.years.forEach(function(years, i){%>
+  <div class="LC2_date_core <%=locals.type%>">
+    <ul class="LC2_date_head">
+      <li>
+        <span class="LC2_icon LC2_icon_arrow-left prev-years"></span>
+      </li>
+      <li>
+        <span class="year-value"><%=locals.years[i][0]%>年</span>
+        <span>-</span>
+        <span class="year-value"><%=locals.years[i][14]%>年</span>
+      </li>
+      <li>
+        <span class="LC2_icon LC2_icon_arrow-right next-years"></span></span>
+      </li>
+    </ul>
+    <div class="LC2_date_content">
+      <ul class="LC2_date_list">
+        <% years.forEach(function(year, i){%>
+        <li><span><%=year%></span></li>
+        <%})%>
+      </ul>
+    </div>
+    <ul class="LC2_date_footer">
+      <li>
+        <%if (locals.years.length == 1 || i > 0) {%>
+        <a href="#" class="LC2_date_button">确定</a>
+        <%}%>
+      </li>
+    </ul>
+  </div>
+  <%})%>
+</div>

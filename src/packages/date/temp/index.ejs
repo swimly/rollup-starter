@@ -5,7 +5,8 @@
     <ul class="LC2_date_head">
       <li>
         <%if (i < 1) {%>
-        <span class="LC2_icon LC2_icon_arrow-left prev-month"></span>
+          <span class="LC2_icon LC2_icon_arrow-left prev-year"></span>
+          <span class="LC2_icon LC2_icon_arrow-left prev-month"></span>
         <%}%>
       </li>
       <li>
@@ -21,6 +22,7 @@
       <li>
       <%if(locals.data.length == 1 || i > 0){%>
         <span class="LC2_icon LC2_icon_arrow-right next-month"></span></span>
+        <span class="LC2_icon LC2_icon_arrow-right next-year"></span></span>
       <%}%>
       </li>
     </ul>

@@ -1,5 +1,5 @@
 .LC2_date{
-  font-size:0.7rem;
+  font-size:0;
   box-shadow: 0 2px 4px #ccc;
   display:inline-block;
   // position: absolute;
@@ -13,6 +13,7 @@
     height:40px;
     margin-top:-70px;
     box-sizing: border-box;
+    border-bottom:1px solid #e8e8e8;
     li{
       display:table-cell;
       white-space: nowrap;
@@ -38,6 +39,28 @@
     padding-top:70px;
     padding-bottom:50px;
     box-sizing: border-box;
+    font-size:0.7rem;
+    &.year,
+    &.yearmonth{
+      padding:40px 0 50px 0;
+      .LC2_date_head{
+        margin-top:-40px;
+      }
+    }
+    &.time{
+      padding:70px 0 50px 0;
+      .LC2_date_head{
+        margin-top:-70px;
+      }
+    }
+    &:last-child{
+      .LC2_date_weekend{
+        border-left:1px solid #e8e8e8;
+      }
+      .LC2_date_content{
+        border-left:1px solid #e8e8e8;
+      }
+    }
   }
   &_weekend{
     list-style:none;
@@ -55,6 +78,30 @@
   &_content{
     height:100%;
   }
+  &_row{
+    height:100%;
+    font-size:0;
+  }
+  &_column{
+    width:33.33%;
+    display:inline-block;
+    vertical-align: top;
+    overflow:hidden;
+    height:100%;
+    .LC2_date_list{
+      overflow:auto;
+      margin-right:-17px;
+      border-left:1px solid #e8e8e8;
+      li{
+        padding:5px 0;
+      }
+    }
+    &:first-child{
+      .LC2_date_list{
+        border:none;
+      }
+    }
+  }
   &_table{
     width:100%;
     height:100%;
@@ -71,6 +118,7 @@
     padding:0;
     padding:0 15px;
     box-sizing: border-box;
+    border-top:1px solid #e8e8e8;
     li{
       display:table-cell;
       vertical-align: middle;
@@ -86,5 +134,58 @@
     border-radius:2px;
     background:#0183FC;
     color:#fff;
+  }
+  &_times{
+    list-style: none;
+    padding:0;
+    margin:0;
+    display:table;
+    width:100%;
+    height:30px;
+    border-bottom:1px solid #e8e8e8;
+    li{
+      display:table-cell;
+      text-align:center;
+      vertical-align: middle;
+    }
+  }
+  &_list{
+    font-size:0;
+    padding:0;
+    margin:0;
+    list-style:none;
+    white-space: initial;
+    height:100%;
+    &.yearmonth{
+      li{
+        height:25%;
+      }
+    }
+    &.time{
+      li{
+        width:100%;
+        height:auto;
+      }
+    }
+    li{
+      display:inline-block;
+      font-size:14px;
+      color:#333;
+      width:33.33%;
+      height:20%;
+      vertical-align: middle;
+      text-align:center;
+      &:before{
+        content:"";
+        display:inline-block;
+        width:0;
+        height:100%;
+        vertical-align: middle;
+      }
+      span{
+        display:inline-block;
+        vertical-align: middle;
+      }
+    }
   }
 }

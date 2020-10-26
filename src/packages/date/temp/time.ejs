@@ -1,0 +1,42 @@
+<div class="LC2_date">
+  <% locals.times.forEach(function(column, i){%>
+  <div class="LC2_date_core <%=locals.type%>">
+    <ul class="LC2_date_head">
+      <li>
+      </li>
+      <li>
+        <span>请选择时间</span>
+      </li>
+      <li>
+      </li>
+    </ul>
+    <ul class="LC2_date_times">
+      <li>时</li>
+      <li>分</li>
+      <li>秒</li>
+    </ul>
+    <div class="LC2_date_content">
+      <div class="LC2_date_row">
+        <% column.forEach(function(cl, i){%>
+          <div class="LC2_date_column">
+            <ul class="LC2_date_list <%=locals.type%>">
+              <% cl.forEach(function(item, i){%>
+                <li>
+                  <span><%=item%></span>
+                </li>
+              <%})%>
+            </ul>
+          </div>
+          <%})%>
+      </div>
+    </div>
+    <ul class="LC2_date_footer">
+      <li>
+        <%if (locals.times.length == 1 || i > 0) {%>
+        <a href="#" class="LC2_date_button">确定</a>
+        <%}%>
+      </li>
+    </ul>
+  </div>
+  <%})%>
+</div>
