@@ -39,7 +39,7 @@
           <tr>
             <% week.forEach(function(day, index){ %>
               <td class="<%= day.isMonth ? '' : 'LC2_disabled'%>">
-                <span class="<%= day.isToday ? 'LC2_today' : ''%>"><%= day.day%></span>
+                <span is-month="<%=day.isMonth%>" year="<%=day.year%>" month="<%=day.month%>" day="<%=day.day%>" class="LC2_day <%= day.isToday ? 'LC2_today' : ''%>"><%= day.day%></span>
               </td>
             <%})%>
           </tr>
@@ -49,7 +49,7 @@
     <ul class="LC2_date_footer">
       <li>
         <%if (locals.type == 'datetime' && i == 0) {%>
-        <span>选择时间</span>
+        <span class="times">选择时间</span>
         <%}%>
       </li>
       <li>

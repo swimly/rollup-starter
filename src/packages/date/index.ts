@@ -27,7 +27,7 @@ interface Days {
   day?: number,
   isMonth?: boolean,
   weekday?: number,
-  isToday?:boolean
+  isToday?: boolean
 }
 export default class LCDate {
   static option: Option = {
@@ -104,21 +104,47 @@ export default class LCDate {
     })
     // 点击年份
     const years = ele.querySelectorAll('.years')
-    years.forEach((year, index) => {
+    years.forEach((year) => {
       year.addEventListener('click', () => {
-        this.getYearList(opt, dom, index)
+        this.getYearList(opt, dom)
       })
     })
+    const months = ele.querySelectorAll('.months')
+    months.forEach((month) => {
+      month.addEventListener('click', () => {
+        this.getMonthList(opt, dom)
+      })
+    })
+    ele.querySelector('.times')?.addEventListener('click', () => {
+      this.getTimeList(opt, dom)
+    })
   }
-  static getYearList(opt: Option, dom: Node, index: number): void {
-    const option:Option = this.initYears(opt)
+  static getTimeList (opt:Option, dom:Node):void {
+    const option: Option = this.initTimes(opt)
     option.stype = option.type
-    option.type = 'year'
-    const html:string = yearTpl(option)
+    option.type = 'time'
+    const html: string = timeTpl(option)
     const newDom: Node = Utils.parseToDom(html)[0]
     dom.replaceChild(newDom, dom.childNodes[0])
     this.bindClick(opt, dom)
-    console.log(index, option)
+  }
+  static getMonthList(opt: Option, dom: Node): void {
+    const option: Option = this.initMonths(opt)
+    option.stype = option.type
+    option.type = 'yearmonth'
+    const html: string = monthTpl(option)
+    const newDom: Node = Utils.parseToDom(html)[0]
+    dom.replaceChild(newDom, dom.childNodes[0])
+    this.bindClick(opt, dom)
+  }
+  static getYearList(opt: Option, dom: Node): void {
+    const option: Option = this.initYears(opt)
+    option.stype = option.type
+    option.type = 'year'
+    const html: string = yearTpl(option)
+    const newDom: Node = Utils.parseToDom(html)[0]
+    dom.replaceChild(newDom, dom.childNodes[0])
+    this.bindClick(opt, dom)
   }
   // 切换到下个月
   static onNextMonth(opt: Option, dom: Node): void {
@@ -241,9 +267,19 @@ export default class LCDate {
     const secondArr: Array<number> = minuteArr
     const clm = [hourArr, minuteArr, secondArr]
     option.times = [clm]
+    option.value = [option.value[0].split(' ')[1]]
     if (opt.range) {
       option.times = option.times.concat([clm])
       option.value = option.value.concat(option.value)
+    }
+    return option
+  }
+  static initMonths(opt: Option): Option {
+    const option = opt
+    option.months = [Array.from(new Array(12 + 1).keys()).slice(1)]
+    if (option.range) {
+      option.value = option.value.concat(option.value)
+      option.months = option.months.concat(option.months)
     }
     console.log(option)
     return option
@@ -255,11 +291,7 @@ export default class LCDate {
     } else if (opt.type == 'year') {
       option = this.initYears(opt)
     } else if (opt.type == 'yearmonth') {
-      option.months = [Array.from(new Array(12 + 1).keys()).slice(1)]
-      if (option.range) {
-        option.value = option.value.concat(option.value)
-        option.months = option.months.concat(option.months)
-      }
+      option = this.initMonths(opt)
     } else if (opt.type == 'time') {
       option = this.initTimes(opt)
     }

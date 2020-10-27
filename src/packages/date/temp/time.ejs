@@ -21,8 +21,8 @@
           <div class="LC2_date_column">
             <ul class="LC2_date_list <%=locals.type%>">
               <% cl.forEach(function(item, idx){%>
-                <li class="<%= parseInt(locals.value[i].split(' ')[1].split(':')[idx]) == item ? 'LC2_active' : ''%>">
-                  <span><%=item >= 10 ? item : '0' + item%></span>
+                <li class="<%= idx == 0 ? 'LC2_active' : ''%>">
+                  <span sort="<%=i%>" index="<%=index%>" value="<%=item%>"><%=item >= 10 ? item : '0' + item%></span>
                 </li>
               <%})%>
             </ul>

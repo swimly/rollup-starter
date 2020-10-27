@@ -17,7 +17,9 @@
     <div class="LC2_date_content">
       <ul class="LC2_date_list">
         <% years.forEach(function(year, index){%>
-        <li class="<%= parseInt(locals.value[i].split('/')[0]) == year ? 'LC2_active' : ''%>"><span><%=year%></span></li>
+        <li class="<%= parseInt(locals.value[i].split('/')[0]) == year ? 'LC2_active' : ''%>">
+          <span class="LC2_year" year="<%=year%>"><%=year%></span>
+        </li>
         <%})%>
       </ul>
     </div>
