@@ -33,7 +33,7 @@ export default class LCDate {
   static option: Option = {
     id: '',
     range: false,
-    value: [format(new Date(), 'yyyy/MM/dd hh:mm:ss')],
+    value: [format(new Date(), 'yyyy/MM/dd HH:mm:ss')],
     weeks: ['一', '二', '三', '四', '五', '六', '日'],
     type: 'date',
     years: [[]],
@@ -53,7 +53,33 @@ export default class LCDate {
     divDom.appendChild(dom)
     // divDom.style.position = 'absolute'
     document.body.appendChild(divDom)
+    if (option.type == 'time') {
+      this.renderScroll(opt, divDom)
+    }
     this.bindClick(opt, divDom)
+  }
+  // 将当前时间滚动到正中间
+  static renderScroll (opt:Option, dom:Node):void {
+    const v:Array<Array<string>> = []
+    opt.value.map((item) => {
+      v.push(item.split(':'))
+    })
+    const content = ((dom as HTMLElement).querySelector('.LC2_date_content') as HTMLElement)
+    const pt = content.offsetTop
+    const ph = content.offsetHeight
+    const rows = (dom as Element).querySelectorAll('.LC2_date_row')
+    rows.forEach((row) => {
+      if (!row) return
+      const columns = row.querySelectorAll('.LC2_date_column')
+      columns.forEach((column) => {
+        if (!column) return
+        const scroll = column.querySelector('.LC2_date_list')
+        if (!scroll) return
+        const active = column.querySelector('.LC2_active')
+        const ot = (active as HTMLElement).offsetTop
+        scroll.scrollTop = ot - pt - ph/2 + (active as HTMLElement).offsetHeight / 2
+      })
+    })
   }
   // 渲染html
   static renderDom(opt: Option): Node {
@@ -118,7 +144,30 @@ export default class LCDate {
     ele.querySelector('.times')?.addEventListener('click', () => {
       this.getTimeList(opt, dom)
     })
+    const times = ele.querySelectorAll('.timevalue')
+    times.forEach((time) => {
+      time.addEventListener('click', () => {
+        this.timevalueClick(opt, dom, time)
+      })
+    })
   }
+  static timevalueClick (opt:Option, dom:Node, time:Element):void{
+    const value:Array<Array<string>> = []
+    opt.value.map((item) => {
+      value.push(item.split(':'))
+    })
+    const column = time.getAttribute('column') || '0'
+    const index = time.getAttribute('index') || '0'
+    const v = time.getAttribute('value') || '0'
+    value[parseInt(column)][parseInt(index)] = v.length == 1 ? '0' + v : v
+    opt.value[parseInt(column)] = value[parseInt(column)].join(':')
+    const html: string = timeTpl(opt)
+    const newDom: Node = Utils.parseToDom(html)[0]
+    dom.replaceChild(newDom, dom.childNodes[0])
+    this.renderScroll(opt, dom)
+    this.bindClick(opt, dom)
+  }
+  // 生成时分秒数组
   static getTimeList (opt:Option, dom:Node):void {
     const option: Option = this.initTimes(opt)
     option.stype = option.type
@@ -126,8 +175,10 @@ export default class LCDate {
     const html: string = timeTpl(option)
     const newDom: Node = Utils.parseToDom(html)[0]
     dom.replaceChild(newDom, dom.childNodes[0])
+    this.renderScroll(opt, dom)
     this.bindClick(opt, dom)
   }
+  // 生成月份数组
   static getMonthList(opt: Option, dom: Node): void {
     const option: Option = this.initMonths(opt)
     option.stype = option.type
@@ -137,6 +188,7 @@ export default class LCDate {
     dom.replaceChild(newDom, dom.childNodes[0])
     this.bindClick(opt, dom)
   }
+  // 生成年份数组（15年）
   static getYearList(opt: Option, dom: Node): void {
     const option: Option = this.initYears(opt)
     option.stype = option.type
@@ -174,18 +226,21 @@ export default class LCDate {
     dom.replaceChild(d, dom.childNodes[0])
     this.bindClick(opt, dom)
   }
+  // 切换上一年数组(15年)
   static onPrevYears(opt: Option, dom: Node, index: number): void {
     const option = this.changeYears(opt, -1, index)
     const d = this.renderDom(option)
     dom.replaceChild(d, dom.childNodes[0])
     this.bindClick(opt, dom)
   }
+  // 切换下一年(15年)
   static onNextYears(opt: Option, dom: Node, index: number): void {
     const option = this.changeYears(opt, 1, index)
     const d = this.renderDom(option)
     dom.replaceChild(d, dom.childNodes[0])
     this.bindClick(opt, dom)
   }
+  // 改变年的时候生成前后7年的数据
   static changeYears(opt: Option, con: number, index: number): Option {
     const dateArr = opt.value[index].split('/')
     const year: number = parseInt(dateArr[0])
@@ -231,7 +286,7 @@ export default class LCDate {
     return opt
   }
   /*
-    生成数组
+    生成年份数组
   */
   static initYears(opt: Option): Option {
     const option: Option = opt
@@ -268,6 +323,7 @@ export default class LCDate {
     const clm = [hourArr, minuteArr, secondArr]
     option.times = [clm]
     option.value = [option.value[0].split(' ')[1]]
+    // option.value = ['00:00:00']
     if (opt.range) {
       option.times = option.times.concat([clm])
       option.value = option.value.concat(option.value)
@@ -281,7 +337,6 @@ export default class LCDate {
       option.value = option.value.concat(option.value)
       option.months = option.months.concat(option.months)
     }
-    console.log(option)
     return option
   }
   static initArray(opt: Option): Option {

@@ -19,13 +19,15 @@
       <div class="LC2_date_row">
         <% column.forEach(function(cl, index){%>
           <div class="LC2_date_column">
-            <ul class="LC2_date_list <%=locals.type%>">
-              <% cl.forEach(function(item, idx){%>
-                <li class="<%= idx == 0 ? 'LC2_active' : ''%>">
-                  <span sort="<%=i%>" index="<%=index%>" value="<%=item%>"><%=item >= 10 ? item : '0' + item%></span>
-                </li>
-              <%})%>
-            </ul>
+            <div class="LC2_date_list <%=locals.type%>">
+              <ul>
+                <% cl.forEach(function(item, idx){%>
+                  <li class="<%= parseInt(locals.value[i].split(':')[index]) == item ? 'LC2_active' : ''%>">
+                    <span class="timevalue" column="<%=i%>" index="<%=index%>" value="<%=item%>"><%=item >= 10 ? item : '0' + item%></span>
+                  </li>
+                <%})%>
+              </ul>
+            </div>
           </div>
           <%})%>
       </div>
